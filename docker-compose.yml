@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=test_db
+    restart: always
+    
+  web:
+    container_name: fastapi
+    build: ./src
+    command: bash -c "alembic revision --autogenerate -m "init" && alembic upgrade head && cd app && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - ./src:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    restart: always
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    restart: always

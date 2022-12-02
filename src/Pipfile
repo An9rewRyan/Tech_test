@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+psycopg2 = "*"
+databases = "*"
+asyncpg = "*"
+alembic = "*"
+python-dotenv = "*"
+uvicorn = "*"
+requests = "*"
+greenlet = "*"
+sqlmodel = "*"
+python-multipart = "*"
+pytest = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
